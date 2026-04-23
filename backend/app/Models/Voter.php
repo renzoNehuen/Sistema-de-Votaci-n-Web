@@ -8,7 +8,6 @@ class Voter extends Model
 {
     protected $table = 'voters';
     protected $fillable = [
-        'id',
         'document',
         'name',
         'lastName',
@@ -24,12 +23,12 @@ class Voter extends Model
 
     public function votes()
     {
-        return $this->hasMany(Vote::class, 'voter_id');
+        return $this->hasMany(Vote::class, 'voter');
     }
 
     public function receivedVotes()
     {
-        return $this->hasMany(Vote::class, 'candidate_id');
+        return $this->hasMany(Vote::class, 'voterVoted');
     }
 
 }

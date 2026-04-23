@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('voters', function (Blueprint $table) {
             $table->id();
+            $table->string('document', 20)->unique();
+            $table->string('name', 100);
+            $table->string('lastName', 100);
+            $table->date('dob');
+            $table->boolean('isCandidate')->default(false);
             $table->timestamps();
         });
     }
