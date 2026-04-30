@@ -7,18 +7,33 @@ use Illuminate\Http\Request;
 
 class VoterController extends Controller
 {
-    /**
-     * Display a listing of voters.
-     */
+    
+    //Listar todos los votantes (incluye candidatos)
     public function index()
     {
         $voters = Voter::all();
         return response()->json($voters, 200);
     }
 
-    /**
-     * Store a newly created voter in storage.
-     */
+    //Listar todos los candidatos
+    public function listCandidates()
+    {
+        $candidates = Voter::where('isCandidate', true)->get();
+        return response()->json($candidates, 200);
+    }
+
+    //Listar todos los candidatos con los votos recibidos en orden de mayor a menor
+    public function results()
+    {
+        $candidates = Voter::where('isCandidate', true)
+        ->withCount('receivedVotes')
+        ->orderByDesc('received_votes_count')
+        ->get();
+
+        return response()->json($candidates, 200);
+    }
+   
+    //Crear Votante
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -36,9 +51,9 @@ class VoterController extends Controller
         return response()->json($voter, 201);
     }
 
-    /**
-     * Display the specified voter.
-     */
+   
+    //Mostrar votante indicado
+    //En caso de ser candidato se muestra tambien la cantidad de votos recibidos
     public function show($id)
     {
         $voter = Voter::find($id);
@@ -47,12 +62,15 @@ class VoterController extends Controller
             return response()->json(['message' => 'Votante no encontrado'], 404);
         }
 
+        if ($voter->isCandidate){
+            $voter->votes_received = $voter->receivedVotes()->count();
+        }
+
         return response()->json($voter, 200);
     }
 
-    /**
-     * Update the specified voter in storage.
-     */
+    
+    //Actualizar Votante indicado
     public function update(Request $request, $id)
     {
         $voter = Voter::find($id);
@@ -74,9 +92,7 @@ class VoterController extends Controller
         return response()->json($voter, 200);
     }
 
-    /**
-     * Remove the specified voter from storage.
-     */
+    //Eliminar Votante indicado
     public function destroy($id)
     {
         $voter = Voter::find($id);
@@ -85,7 +101,6 @@ class VoterController extends Controller
             return response()->json(['message' => 'Votante no encontrado'], 404);
         }
 
-        // Check if voter has votes
         if ($voter->votes()->count() > 0 || $voter->receivedVotes()->count() > 0) {
             return response()->json(['message' => 'No se puede eliminar un votante que tiene votos asociados'], 422);
         }

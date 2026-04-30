@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    //Inicio de sesion
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -31,6 +32,7 @@ class AuthController extends Controller
         ], 200);
     }
 
+    //Cerrar sesion
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -40,11 +42,13 @@ class AuthController extends Controller
         ], 200);
     }
 
+    //Usuario actual
     public function me(Request $request)
     {
         return response()->json($request->user(), 200);
     }
 
+    //cambiar contraseña
     public function changePassword(Request $request)
     {
         $validated = $request->validate([

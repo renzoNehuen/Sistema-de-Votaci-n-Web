@@ -8,18 +8,17 @@ use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
-    /**
-     * Display a listing of votes.
-     */
+    
+    //Listar todos los votos
     public function index()
     {
         $votes = Vote::with(['voter', 'candidate'])->get();
         return response()->json($votes, 200);
     }
 
-    /**
-     * Store a newly created vote in storage.
-     */
+   
+    //Crear Voto
+    //Un votante no puede votarse a si mismo ni puede emitir un unico voto y a un unico candidato
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -28,7 +27,7 @@ class VoteController extends Controller
             'date' => 'nullable|date',
         ]);
 
-        // Verify voter exists and is not a candidate voting for themselves
+        //Verificar que el votante existe y si es candidato no se vote a si mismo
         $voter = Voter::find($validated['voter']);
         $candidate = Voter::find($validated['voterVoted']);
 
@@ -40,13 +39,11 @@ class VoteController extends Controller
             return response()->json(['message' => 'El destinatario no es un candidato válido'], 422);
         }
 
-        // Check if voter already voted for this candidate
-        $existingVote = Vote::where('voter', $validated['voter'])
-            ->where('voterVoted', $validated['voterVoted'])
-            ->first();
+        //Verificar si el votante ya emitio un voto con anterioridad
+        $existingVote = Vote::where('voter', $validated['voter'])->exists();
 
         if ($existingVote) {
-            return response()->json(['message' => 'Este votante ya ha votado por este candidato'], 422);
+            return response()->json(['message' => 'Usted ya emitio un voto anteriormente'], 422);
         }
 
         $validated['date'] = $validated['date'] ?? now();
@@ -56,9 +53,8 @@ class VoteController extends Controller
         return response()->json($vote, 201);
     }
 
-    /**
-     * Display the specified vote.
-     */
+   
+    //Imprimir el voto indicado
     public function show($id)
     {
         $vote = Vote::with(['voter', 'candidate'])->find($id);
@@ -70,9 +66,8 @@ class VoteController extends Controller
         return response()->json($vote, 200);
     }
 
-    /**
-     * Update the specified vote in storage.
-     */
+    
+    //Actualizar el voto indicado
     public function update(Request $request, $id)
     {
         $vote = Vote::find($id);
@@ -99,9 +94,7 @@ class VoteController extends Controller
         return response()->json($vote, 200);
     }
 
-    /**
-     * Remove the specified vote from storage.
-     */
+    //Elimitar el voto indicado
     public function destroy($id)
     {
         $vote = Vote::find($id);

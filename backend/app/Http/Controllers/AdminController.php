@@ -8,18 +8,16 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of admins.
-     */
+    
+    //Listar todos los Admins
     public function index()
     {
         $admins = Admin::all();
         return response()->json($admins, 200);
     }
 
-    /**
-     * Store a newly created admin in storage.
-     */
+    
+    //Crear nuevo Admin
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,9 +35,7 @@ class AdminController extends Controller
         return response()->json($admin, 201);
     }
 
-    /**
-     * Display the specified admin.
-     */
+    //Imprimir admin indicado
     public function show($id)
     {
         $admin = Admin::find($id);
@@ -51,9 +47,7 @@ class AdminController extends Controller
         return response()->json($admin, 200);
     }
 
-    /**
-     * Update the specified admin in storage.
-     */
+    //Actualizar Admin indicado
     public function update(Request $request, $id)
     {
         $admin = Admin::find($id);
@@ -83,9 +77,7 @@ class AdminController extends Controller
         return response()->json($admin, 200);
     }
 
-    /**
-     * Remove the specified admin from storage.
-     */
+    //Eliminar admin indicado
     public function destroy($id)
     {
         $admin = Admin::find($id);
