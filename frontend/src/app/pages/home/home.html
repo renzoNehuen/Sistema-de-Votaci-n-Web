@@ -1,1 +1,70 @@
-<p>home works!</p>
+<div class="home-container">
+
+  <header class="topbar">
+    <div class="logo">Solcre</div>
+
+    <p-button
+      label="Login"
+      severity="secondary"
+      size="small"
+      routerLink="/login">
+    </p-button>
+  </header>
+
+  <section class="hero">
+
+    <h1>Ingrese su documento para votar</h1>
+
+    <div class="document-box">
+
+      <input
+        pInputText
+        type="text"
+        placeholder="Cédula"
+        [(ngModel)]="document">
+
+      <p-button
+        icon="pi pi-arrow-right"
+        shape="circle"
+        (onClick)="searchDocument()">
+      </p-button>
+
+    </div>
+
+  </section>
+
+  <section class="candidates-section" *ngIf="showCandidates">
+
+    <h2>Candidatos</h2>
+
+    <div class="cards-grid">
+
+      <p-card
+        *ngFor="let candidate of candidates"
+        [header]="$any(candidate).name + ' ' + $any(candidate).lastName">
+
+        <ng-template pTemplate="content">
+
+          <div class="candidate-body">
+
+            <div class="avatar-placeholder"></div>
+
+            <p-button
+              label="Votar"
+              icon="pi pi-check"
+              (onClick)="vote($any(candidate).id)">
+            </p-button>
+
+          </div>
+
+        </ng-template>
+
+      </p-card>
+
+    </div>
+
+  </section>
+
+</div>
+
+<p-toast></p-toast>
