@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.card {
+  width: 400px;
+  padding: 25px;
+  border-radius: 12px;
+  background: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  label {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  input, .p-calendar {
+    width: 100%;
+  }
+}
+
+.switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.create-btn {
+  width: 100%;
+  border-radius: 8px;
+}

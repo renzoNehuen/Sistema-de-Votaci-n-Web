@@ -1,1 +1,44 @@
-<p>new-voter works!</p>
+<app-header></app-header>
+
+<div class="container">
+  <div class="card">
+
+    <div class="field">
+      <label>Nombre</label>
+      <input pInputText [(ngModel)]="name" placeholder="Value" />
+    </div>
+
+    <div class="field">
+      <label>Apellido</label>
+      <input pInputText [(ngModel)]="lastName" placeholder="Value" />
+    </div>
+
+    <div class="field">
+      <label>Documento</label>
+      <input pInputText [(ngModel)]="document" placeholder="Value" />
+    </div>
+
+    <div class="field">
+      <label>Fecha de Nacimiento</label>
+      <p-datePicker 
+        [(ngModel)]="dob"
+        dateFormat="dd/mm/yy"
+        showIcon="true"
+        placeholder="Seleccionar fecha">
+      </p-datePicker>
+    </div>
+
+    <div class="switch">
+      <span>Es Candidato</span>
+      <p-toggleSwitch [(ngModel)]="isCandidate"></p-toggleSwitch>
+    </div>
+
+    <button 
+      pButton 
+      label="Crear" 
+      class="create-btn"
+      (click)="createVoter()">
+    </button>
+
+  </div>
+</div>

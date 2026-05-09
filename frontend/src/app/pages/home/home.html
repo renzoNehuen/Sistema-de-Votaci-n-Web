@@ -1,15 +1,6 @@
 <div class="home-container">
 
-  <header class="topbar">
-    <div class="logo">Solcre</div>
-
-    <p-button
-      label="Login"
-      severity="secondary"
-      size="small"
-      routerLink="/login">
-    </p-button>
-  </header>
+  <app-header></app-header>
 
   <section class="hero">
 
@@ -24,9 +15,9 @@
         [(ngModel)]="document">
 
       <p-button
-        icon="pi pi-arrow-right"
+        icon="pi pi-search"
         shape="circle"
-        (onClick)="searchDocument()">
+        (click)="searchDocument()">
       </p-button>
 
     </div>
@@ -41,7 +32,7 @@
 
       <p-card
         *ngFor="let candidate of candidates"
-        [header]="$any(candidate).name + ' ' + $any(candidate).lastName">
+        [header]="candidate.name + ' ' + candidate.lastName">
 
         <ng-template pTemplate="content">
 
@@ -52,7 +43,7 @@
             <p-button
               label="Votar"
               icon="pi pi-check"
-              (onClick)="vote($any(candidate).id)">
+              (click)="vote(candidate.id)">
             </p-button>
 
           </div>
@@ -66,5 +57,3 @@
   </section>
 
 </div>
-
-<p-toast></p-toast>

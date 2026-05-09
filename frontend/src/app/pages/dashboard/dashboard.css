@@ -1,0 +1,95 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: #f4f4f4;
+}
+
+/* Topbar */
+.topbar {
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #ececec;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ff6b00;
+  letter-spacing: -0.5px;
+}
+
+/* Center area */
+.dashboard-content {
+  min-height: calc(100vh - 60px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+}
+
+/* Button column */
+.menu-buttons {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* PrimeNG buttons */
+:host ::ng-deep .dashboard-btn .p-button {
+  width: 100%;
+  height: 58px;
+
+  border-radius: 999px;
+  border: none;
+
+  background: #ffffff;
+  color: #222;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .dashboard-btn .p-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.12);
+  background: #fafafa;
+}
+
+:host ::ng-deep .dashboard-btn .p-button:focus {
+  box-shadow:
+    0 0 0 3px rgba(255, 107, 0, 0.15),
+    0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .menu-buttons {
+    max-width: 100%;
+  }
+
+  :host ::ng-deep .dashboard-btn .p-button {
+    height: 54px;
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+}

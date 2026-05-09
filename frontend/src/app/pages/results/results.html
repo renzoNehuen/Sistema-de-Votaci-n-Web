@@ -1,1 +1,52 @@
-<p>results works!</p>
+<app-header></app-header>
+
+<div class="container">
+
+  <h1 class="title">Resultados</h1>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <i class="pi pi-users"></i>
+      <h3>{{ stats.voters }}</h3>
+      <p>Votantes</p>
+    </div>
+
+    <div class="stat-card">
+      <i class="pi pi-id-card"></i>
+      <h3>{{ stats.candidates }}</h3>
+      <p>Candidatos</p>
+    </div>
+
+    <div class="stat-card">
+      <i class="pi pi-file"></i>
+      <h3>{{ stats.votes }}</h3>
+      <p>Votos</p>
+    </div>
+  </div>
+
+  <!-- Lista de votos -->
+  <div class="votes-section">
+    <h2>Votos</h2>
+
+    <div 
+      class="vote-card"
+      *ngFor="let vote of votes"
+      (click)="goToVote(vote.id)"
+    >
+      <h4>{{ vote.title }}</h4>
+      <p>{{ vote.description }}</p>
+    </div>
+  </div>
+
+  <!-- Paginación (visual) -->
+  <div class="pagination">
+    <span>« Previous</span>
+    <span class="active">1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>…</span>
+    <span>Next »</span>
+  </div>
+
+</div>

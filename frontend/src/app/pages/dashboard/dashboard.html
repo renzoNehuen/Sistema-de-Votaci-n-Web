@@ -1,1 +1,133 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="logo">Solcré</div>
+
+    <p-button
+      label="Login"
+      severity="secondary"
+      size="small"
+      routerLink="/login">
+    </p-button>
+  </header>
+
+  <!-- Main content -->
+  <section class="dashboard-content">
+
+    <!-- Estadísticas -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <h3>Votos Totales</h3>
+        <p class="stat-number">{{ stats.totalVotes }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Candidatos</h3>
+        <p class="stat-number">{{ stats.totalCandidates }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Votantes</h3>
+        <p class="stat-number">{{ stats.totalVoters }}</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+      <p-tabs [value]="selectedTab">
+        <p-tablist>
+          <p-tab value="0">Votos</p-tab>
+          <p-tab value="1">Candidatos</p-tab>
+          <p-tab value="2">Votantes</p-tab>
+        </p-tablist>
+
+        <p-tabpanels>
+          <p-tabpanel value="0">
+            <p-table [value]="votes" [tableStyle]="{ 'min-width': '50rem' }">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>ID</th>
+                  <th>Candidato</th>
+                  <th>Fecha</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-vote>
+                <tr>
+                  <td>{{ vote.id }}</td>
+                  <td>{{ vote.candidate }}</td>
+                  <td>{{ vote.date }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-tabpanel>
+
+          <p-tabpanel value="1">
+            <p-table [value]="candidates" [tableStyle]="{ 'min-width': '50rem' }">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Votos</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-candidate>
+                <tr>
+                  <td>{{ candidate.id }}</td>
+                  <td>{{ candidate.name }}</td>
+                  <td>{{ candidate.votes }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-tabpanel>
+
+          <p-tabpanel value="2">
+            <p-table [value]="voters" [tableStyle]="{ 'min-width': '50rem' }">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Ha Votado</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-voter>
+                <tr>
+                  <td>{{ voter.id }}</td>
+                  <td>{{ voter.name }}</td>
+                  <td>
+                    <span *ngIf="voter.hasVoted" class="voted">Sí</span>
+                    <span *ngIf="!voter.hasVoted" class="not-voted">No</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="menu-buttons">
+      <p-button
+        label="Candidatos mas votados"
+        class="dashboard-btn"
+        styleClass="w-full"
+        routerLink="/admin/results">
+      </p-button>
+
+      <p-button
+        label="Agregar Votante"
+        class="dashboard-btn"
+        styleClass="w-full"
+        routerLink="/admin/voters/create">
+      </p-button>
+
+      <p-button
+        label="Cambiar Contraseña"
+        class="dashboard-btn"
+        styleClass="w-full"
+        routerLink="/change-password">
+      </p-button>
+    </div>
+
+  </section>
+
+</div>
