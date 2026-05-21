@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { LoginDto, LoginResponseDto } from '../../dtos/auth.dto';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +31,7 @@ export class Login {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private authService: AuthService,
     private messageService: MessageService
   ) {}
 
@@ -47,18 +46,10 @@ export class Login {
       return;
     }
 
-    const payload: LoginDto = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.http.post<LoginResponseDto>('http://localhost:8000/api/login', payload)
+    this.authService.login(this.email, this.password)
       .subscribe({
         next: (response) => {
-          if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
-            window.localStorage.setItem('token', response.token);
-            window.localStorage.setItem('admin', JSON.stringify(response.admin));
-          }
+          this.authService.saveToken(response);
 
           this.messageService.add({
             severity: 'success',

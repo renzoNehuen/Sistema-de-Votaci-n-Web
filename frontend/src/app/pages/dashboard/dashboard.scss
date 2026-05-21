@@ -113,6 +113,28 @@
           }
         }
 
+        .p-datatable-tbody > tr > td .is-candidate-yes {
+          color: #1e7e34;
+          font-weight: 600;
+        }
+
+        .p-datatable-tbody > tr > td .is-candidate-no {
+          color: #6c757d;
+          font-weight: 600;
+        }
+
+        .delete-btn ::ng-deep .p-button {
+          color: #c0392b;
+          border: none;
+          background: transparent;
+        }
+
+        .candidate-btn ::ng-deep .p-button {
+          color: #16a085;
+          border: none;
+          background: transparent;
+        }
+
         .p-datatable-tbody > tr:hover {
           background-color: #f9f9f9;
         }
@@ -141,6 +163,22 @@
       }
     }
   }
+}
+
+.table-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.p-toggle-switch {
+  min-width: 110px;
+}
+
+.delete-btn ::ng-deep .p-button {
+  color: #c0392b;
+  border: none;
+  background: transparent;
 }
 
 // Estilos para indicadores

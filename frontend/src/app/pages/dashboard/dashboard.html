@@ -1,17 +1,7 @@
 <div class="dashboard-container">
 
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="logo">Solcré</div>
-
-    <p-button
-      label="Login"
-      severity="secondary"
-      size="small"
-      routerLink="/login">
-    </p-button>
-  </header>
-
+  <app-header></app-header>
+  
   <!-- Main content -->
   <section class="dashboard-content">
 
@@ -80,12 +70,23 @@
           </p-tabpanel>
 
           <p-tabpanel value="2">
+            <div class="table-actions">
+              <p-button
+                label="Registrar Votante"
+                icon="pi pi-user-plus"
+                styleClass="p-button-secondary"
+                (click)="goToCreateVoter()">
+              </p-button>
+            </div>
+
             <p-table [value]="voters" [tableStyle]="{ 'min-width': '50rem' }">
               <ng-template pTemplate="header">
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Ha Votado</th>
+                  <th>Es Candidato</th>
+                  <th>Acciones</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-voter>
@@ -95,6 +96,22 @@
                   <td>
                     <span *ngIf="voter.hasVoted" class="voted">Sí</span>
                     <span *ngIf="!voter.hasVoted" class="not-voted">No</span>
+                  </td>
+                  <td>
+                    <p-toggleSwitch
+                      [(ngModel)]="voter.isCandidate"
+                      onLabel="Sí"
+                      offLabel="No"
+                      (onChange)="setCandidate(voter, $event)">
+                    </p-toggleSwitch>
+                  </td>
+                  <td>
+                    <p-button
+                      icon="pi pi-trash"
+                      class="p-button-text p-button-sm"
+                      styleClass="delete-btn"
+                      (click)="deleteVoter(voter)">
+                    </p-button>
                   </td>
                 </tr>
               </ng-template>
@@ -106,20 +123,6 @@
 
     <!-- Botones de acción -->
     <div class="menu-buttons">
-      <p-button
-        label="Candidatos mas votados"
-        class="dashboard-btn"
-        styleClass="w-full"
-        routerLink="/admin/results">
-      </p-button>
-
-      <p-button
-        label="Agregar Votante"
-        class="dashboard-btn"
-        styleClass="w-full"
-        routerLink="/admin/voters/create">
-      </p-button>
-
       <p-button
         label="Cambiar Contraseña"
         class="dashboard-btn"

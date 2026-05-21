@@ -1,20 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { Header } from '../../shared/header/header';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     ButtonModule,
     TabsModule,
-    TableModule
+    TableModule,
+    ToggleSwitchModule,
+    Header
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
@@ -58,8 +64,8 @@ export class AdminDashboard {
     ];
     
     this.voters = [
-      { id: 1, name: 'Votante 1', hasVoted: true },
-      { id: 2, name: 'Votante 2', hasVoted: false }
+      { id: 1, name: 'Votante 1', hasVoted: true, isCandidate: false },
+      { id: 2, name: 'Votante 2', hasVoted: false, isCandidate: true }
     ];
   }
 
@@ -77,6 +83,21 @@ export class AdminDashboard {
 
   goToChangePassword() {
     this.router.navigate(['/change-password']);
+  }
+
+  deleteVoter(voter: any) {
+    // UI-only deletion (replace with API call when available)
+    this.voters = this.voters.filter(v => v.id !== voter.id);
+    this.stats.totalVoters = this.voters.length;
+  }
+
+  setCandidate(voter: any, event: any) {
+    // Update candidate flag from toggle switch (replace with API call when available)
+    const idx = this.voters.findIndex(v => v.id === voter.id);
+    if (idx > -1) {
+      this.voters[idx].isCandidate = event.checked;
+      this.stats.totalCandidates = this.voters.filter(v => v.isCandidate).length;
+    }
   }
 
   logout() {
