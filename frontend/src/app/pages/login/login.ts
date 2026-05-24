@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
+import { Header } from '../../shared/header/header';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ import { AuthService } from '../../services/auth.service';
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    Header
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'

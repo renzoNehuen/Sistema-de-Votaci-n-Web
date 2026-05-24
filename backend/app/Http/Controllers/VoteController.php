@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vote;
 use App\Models\Voter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VoteController extends Controller
 {
@@ -47,6 +48,7 @@ class VoteController extends Controller
         }
 
         $validated['date'] = $validated['date'] ?? now();
+        $validated['voteId'] = Str::uuid()->toString();
 
         $vote = Vote::create($validated);
 

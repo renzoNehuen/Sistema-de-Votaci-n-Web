@@ -1,8 +1,16 @@
 <div class="header">
   <div class="logo">Solcre</div>
   <div class="header-actions">
+    <p-button
+      label="Home"
+      severity="secondary"
+      size="small"
+      routerLink="/"
+      class="home-btn">
+    </p-button>
+
     <div *ngIf="(isAuthenticated$ | async)" class="user-info">
-      <span class="user-name">Bienvenido, {{ adminName }}</span>
+      <span class="user-name">Bienvenido, {{ (admin$ | async)?.name }}</span>
       <p-button
         label="Logout"
         severity="danger"

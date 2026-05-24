@@ -48,6 +48,10 @@ export const routes: Routes = [
         component: NewVoter
       },
       {
+        path: 'voters/:id/edit',
+        component: NewVoter
+      },
+      {
         path: 'candidates',
         component: Candidates
       }

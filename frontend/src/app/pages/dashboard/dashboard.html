@@ -43,7 +43,7 @@
               <ng-template pTemplate="body" let-vote>
                 <tr>
                   <td>{{ vote.id }}</td>
-                  <td>{{ vote.candidate }}</td>
+                  <td>{{ vote.candidate?.name }} {{ vote.candidate?.lastName }}</td>
                   <td>{{ vote.date }}</td>
                 </tr>
               </ng-template>
@@ -62,8 +62,8 @@
               <ng-template pTemplate="body" let-candidate>
                 <tr>
                   <td>{{ candidate.id }}</td>
-                  <td>{{ candidate.name }}</td>
-                  <td>{{ candidate.votes }}</td>
+                  <td>{{ candidate.fullName || (candidate.name + ' ' + candidate.lastName) }}</td>
+                  <td>{{ candidate.votes ?? 0 }}</td>
                 </tr>
               </ng-template>
             </p-table>
@@ -92,20 +92,22 @@
               <ng-template pTemplate="body" let-voter>
                 <tr>
                   <td>{{ voter.id }}</td>
-                  <td>{{ voter.name }}</td>
+                  <td>{{ voter.name }} {{ voter.lastName }}</td>
                   <td>
                     <span *ngIf="voter.hasVoted" class="voted">Sí</span>
                     <span *ngIf="!voter.hasVoted" class="not-voted">No</span>
                   </td>
                   <td>
-                    <p-toggleSwitch
-                      [(ngModel)]="voter.isCandidate"
-                      onLabel="Sí"
-                      offLabel="No"
-                      (onChange)="setCandidate(voter, $event)">
-                    </p-toggleSwitch>
+                    <span *ngIf="voter.isCandidate" class="voted">Sí</span>
+                    <span *ngIf="!voter.isCandidate" class="not-voted">No</span>
                   </td>
                   <td>
+                    <p-button
+                      icon="pi pi-pencil"
+                      class="p-button-text p-button-sm"
+                      styleClass="edit-btn"
+                      (click)="editVoter(voter)">
+                    </p-button>
                     <p-button
                       icon="pi pi-trash"
                       class="p-button-text p-button-sm"

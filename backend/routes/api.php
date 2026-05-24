@@ -9,6 +9,9 @@ use App\Http\Controllers\AuthController;
 
 // RUTAS SIN PROTECCION
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/public/candidates', [VoterController::class, 'listCandidates']);
+Route::get('/public/voters/search', [VoterController::class, 'searchByDocument']);
+Route::post('/public/votes', [VoteController::class, 'store']);
 
 // RUTAS PROTEGIDAS
 Route::middleware('auth:sanctum')->group(function () {

@@ -1,7 +1,9 @@
 <app-header></app-header>
+<p-toast></p-toast>
 
 <div class="container">
   <div class="card">
+    <h2>{{ pageTitle }}</h2>
 
     <div class="field">
       <label>Nombre</label>
@@ -35,9 +37,9 @@
 
     <button 
       pButton 
-      label="Crear"
+      [label]="buttonLabel"
       class="save-btn"
-      (click)="createVoter()">
+      (click)="saveVoter()">
     </button>
 
   </div>

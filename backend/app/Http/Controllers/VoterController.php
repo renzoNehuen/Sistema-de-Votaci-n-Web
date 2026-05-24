@@ -69,6 +69,21 @@ class VoterController extends Controller
         return response()->json($voter, 200);
     }
 
+    public function searchByDocument(Request $request)
+    {
+        $validated = $request->validate([
+            'document' => 'required|string|max:20',
+        ]);
+
+        $voter = Voter::where('document', $validated['document'])->first();
+
+        if (!$voter) {
+            return response()->json(['message' => 'Votante no encontrado'], 404);
+        }
+
+        return response()->json($voter, 200);
+    }
+
     
     //Actualizar Votante indicado
     public function update(Request $request, $id)

@@ -5,6 +5,10 @@ declare module '@angular/common/http' {
 
   export class HttpClient {
     post<T>(url: string, body: any | null, options?: any): Observable<T>;
+    get<T>(url: string, options?: any): Observable<T>;
+    put<T>(url: string, body: any | null, options?: any): Observable<T>;
+    delete<T>(url: string, options?: any): Observable<T>;
+    patch<T>(url: string, body: any | null, options?: any): Observable<T>;
   }
 
   export class HttpClientModule {}
