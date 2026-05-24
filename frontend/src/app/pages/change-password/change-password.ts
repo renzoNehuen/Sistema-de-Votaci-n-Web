@@ -4,8 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 import { Header } from '../../shared/header/header';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-change-password',
@@ -21,14 +23,29 @@ import { Header } from '../../shared/header/header';
   styleUrls: ['./change-password.scss']
 })
 export class ChangePassword {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
+  message: string = '';
+  messageType: 'success' | 'error' = 'error';
 
   save() {
+    this.message = '';
+
+    if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
+      this.messageType = 'error';
+      this.message = 'Completa todos los campos antes de guardar.';
+      return;
+    }
+
     if (this.newPassword !== this.confirmPassword) {
-      console.error('Las contraseñas no coinciden');
+      this.messageType = 'error';
+      this.message = 'Las nuevas contraseñas no coinciden.';
       return;
     }
 
@@ -38,8 +55,16 @@ export class ChangePassword {
       new_password_confirmation: this.confirmPassword
     };
 
-    console.log('Enviar al backend:', payload);
-
-    // TODO: conectar con API
+    this.authService.changePassword(payload).subscribe({
+      next: () => {
+        this.messageType = 'success';
+        this.message = 'Contraseña actualizada correctamente. Por seguridad, inicia sesión de nuevo.';
+        setTimeout(() => this.authService.logout(), 1200);
+      },
+      error: (error) => {
+        this.messageType = 'error';
+        this.message = error?.error?.message || 'Error al actualizar la contraseña';
+      }
+    });
   }
 }

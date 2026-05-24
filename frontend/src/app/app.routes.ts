@@ -54,14 +54,12 @@ export const routes: Routes = [
       {
         path: 'candidates',
         component: Candidates
+      },
+      {
+        path: 'change-password',
+        component: ChangePassword
       }
     ]
-  },
-
-  // Rutas públicas adicionales
-  {
-    path: 'change-password',
-    component: ChangePassword
   },
 
   // Redirect wildcard

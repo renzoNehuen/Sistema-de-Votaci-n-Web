@@ -2,8 +2,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 1.5rem 2rem;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -17,12 +17,14 @@
   .header-actions {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex: 1;
     gap: 1rem;
 
     .user-info {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      width: auto;
 
       .user-name {
         font-size: 0.9rem;

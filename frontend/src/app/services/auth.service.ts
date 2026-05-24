@@ -89,6 +89,10 @@ export class AuthService {
     return this.http.post<LoginResponseDto>('http://localhost:8000/api/login', payload, this.jsonHeaders());
   }
 
+  changePassword(payload: { current_password: string; new_password: string; new_password_confirmation: string }): Observable<any> {
+    return this.http.put<any>('http://localhost:8000/api/change-password', payload, this.getAuthOptions());
+  }
+
   saveToken(response: LoginResponseDto): void {
     if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
       window.localStorage.setItem('token', response.token);

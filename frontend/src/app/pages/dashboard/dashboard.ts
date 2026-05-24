@@ -109,7 +109,7 @@ export class AdminDashboard {
   }
 
   goToChangePassword() {
-    this.router.navigate(['/change-password']);
+    this.router.navigate(['/admin/change-password']);
   }
 
   deleteVoter(voter: any) {

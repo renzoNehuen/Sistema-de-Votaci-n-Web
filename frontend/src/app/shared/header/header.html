@@ -2,7 +2,7 @@
   <div class="logo">Solcre</div>
   <div class="header-actions">
     <p-button
-      label="Home"
+      icon="pi pi-home"
       severity="secondary"
       size="small"
       routerLink="/"
@@ -10,9 +10,9 @@
     </p-button>
 
     <div *ngIf="(isAuthenticated$ | async)" class="user-info">
-      <span class="user-name">Bienvenido, {{ (admin$ | async)?.name }}</span>
+      <span class="user-name">Bienvenido {{ (admin$ | async)?.name }}</span>
       <p-button
-        label="Logout"
+        icon="pi pi-sign-out"
         severity="danger"
         size="small"
         (click)="logout()"
@@ -21,7 +21,7 @@
     </div>
     <div *ngIf="!(isAuthenticated$ | async)">
       <p-button
-        label="Login"
+        icon="pi pi-sign-in"
         severity="secondary"
         size="small"
         routerLink="/login"
