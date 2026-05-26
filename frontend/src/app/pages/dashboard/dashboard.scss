@@ -74,6 +74,54 @@
   margin-bottom: 2rem;
   padding: 1.5rem;
 
+  .candidates-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.9rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+  }
+
+  .candidates-controls label {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #52606d;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .candidates-controls select,
+  .candidates-controls input {
+    min-height: 2.6rem;
+    padding: 0 1rem;
+    border-radius: 0.85rem;
+    border: 1px solid #d9e2ec;
+    background: white;
+    color: #344054;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .candidates-controls select {
+    min-width: 180px;
+  }
+
+  .candidates-controls input {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .candidates-controls select:focus,
+  .candidates-controls input:focus {
+    outline: none;
+    border-color: #5b7ffc;
+    box-shadow: 0 0 0 4px rgba(91, 127, 252, 0.12);
+  }
+
   ::ng-deep {
     .p-tabs {
       .p-tabs-nav {
@@ -173,6 +221,42 @@
 
 .p-toggle-switch {
   min-width: 110px;
+}
+
+.details-btn ::ng-deep .p-button {
+  color: #0f4ad3;
+  border: none;
+  background: transparent;
+}
+
+.vote-detail-dialog {
+  display: grid;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.vote-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.vote-detail-row:last-child {
+  border-bottom: none;
+}
+
+.vote-detail-row span {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.vote-detail-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 0.25rem 0;
 }
 
 .delete-btn ::ng-deep .p-button {

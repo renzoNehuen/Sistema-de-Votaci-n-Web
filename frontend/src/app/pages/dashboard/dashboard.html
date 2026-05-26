@@ -32,12 +32,13 @@
 
         <p-tabpanels>
           <p-tabpanel value="0">
-            <p-table [value]="votes" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table [value]="votes" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="10">
               <ng-template pTemplate="header">
                 <tr>
                   <th>ID</th>
                   <th>Candidato</th>
                   <th>Fecha</th>
+                  <th>Acciones</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-vote>
@@ -45,13 +46,66 @@
                   <td>{{ vote.id }}</td>
                   <td>{{ vote.candidate?.name }} {{ vote.candidate?.lastName }}</td>
                   <td>{{ vote.date }}</td>
+                  <td>
+                    <p-button
+                      label="Detalles"
+                      icon="pi pi-info-circle"
+                      class="p-button-text"
+                      styleClass="details-btn"
+                      (click)="viewVoteDetails(vote)">
+                    </p-button>
+                  </td>
                 </tr>
               </ng-template>
             </p-table>
           </p-tabpanel>
 
+          <p-dialog header="Detalle del voto" [(visible)]="showVoteDetails" [modal]="true" [style]="{ width: '34rem' }" [closable]="false">
+            <div *ngIf="selectedVote" class="vote-detail-dialog">
+              <div class="vote-detail-row">
+                <span>Voto ID</span>
+                <strong>{{ selectedVote.id }}</strong>
+              </div>
+              <div class="vote-detail-row">
+                <span>Candidato</span>
+                <strong>{{ selectedVote.candidate?.name }} {{ selectedVote.candidate?.lastName }}</strong>
+              </div>
+              <div class="vote-detail-row">
+                <span>Fecha</span>
+                <strong>{{ selectedVote.date }}</strong>
+              </div>
+              <div class="vote-detail-divider"></div>
+              <div class="vote-detail-row">
+                <span>Votante</span>
+                <strong>{{ selectedVote.voter?.name }} {{ selectedVote.voter?.lastName }}</strong>
+              </div>
+              <div class="vote-detail-row">
+                <span>Email</span>
+                <strong>{{ selectedVote.voter?.email || 'No disponible' }}</strong>
+              </div>
+              <div class="vote-detail-row">
+                <span>Identificación</span>
+                <strong>{{ selectedVote.voter?.identification || selectedVote.voter?.dni || 'No disponible' }}</strong>
+              </div>
+            </div>
+            <p-footer>
+              <p-button label="Cerrar" icon="pi pi-times" styleClass="p-button-text" (click)="closeVoteDetails()"></p-button>
+            </p-footer>
+          </p-dialog>
+
           <p-tabpanel value="1">
-            <p-table [value]="candidates" [tableStyle]="{ 'min-width': '50rem' }">
+            <div class="candidates-controls">
+              <label style="margin-right:8px">Orden:</label>
+              <select [(ngModel)]="candidateSort" (change)="applyCandidateFilterSort()">
+                <option value="desc">Más votados</option>
+                <option value="asc">Menos votados</option>
+              </select>
+
+              <label style="margin: 0 8px 0 16px">Buscar:</label>
+              <input type="text" [(ngModel)]="candidateSearch" (input)="applyCandidateFilterSort()" placeholder="Buscar candidato..." />
+            </div>
+
+            <p-table [value]="displayedCandidates" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="10">
               <ng-template pTemplate="header">
                 <tr>
                   <th>ID</th>
@@ -79,7 +133,7 @@
               </p-button>
             </div>
 
-            <p-table [value]="voters" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table [value]="voters" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="10">
               <ng-template pTemplate="header">
                 <tr>
                   <th>ID</th>

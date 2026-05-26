@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -19,6 +20,7 @@ import { VoteService } from '../../services/vote.service';
     FormsModule,
     RouterModule,
     ButtonModule,
+    DialogModule,
     TabsModule,
     TableModule,
     ToggleSwitchModule,
@@ -31,10 +33,15 @@ export class AdminDashboard {
 
   selectedTab: string = "0";
   
-  // Datos de ejemplo - estos deberían venir de servicios
   votes: any[] = [];
   candidates: any[] = [];
   voters: any[] = [];
+  selectedVote: any = null;
+  showVoteDetails: boolean = false;
+
+  candidateSearch: string = '';
+  candidateSort: 'asc' | 'desc' = 'desc';
+  displayedCandidates: any[] = [];
 
   stats = {
     totalVotes: 0,
@@ -79,6 +86,7 @@ export class AdminDashboard {
         this.votes = res;
         this.stats.totalVotes = this.votes.length;
         this.calculateDerivedData();
+        this.applyCandidateFilterSort();
       },
       error: (err) => {
         console.error('Error cargando votos', err);
@@ -89,15 +97,12 @@ export class AdminDashboard {
       next: (res) => {
         this.voters = res;
         this.calculateDerivedData();
+        this.applyCandidateFilterSort();
       },
       error: (err) => {
         console.error('Error cargando votantes', err);
       }
     });
-  }
-
-  goToResults() {
-    this.router.navigate(['/admin/results']);
   }
 
   goToVotes() {
@@ -125,10 +130,37 @@ export class AdminDashboard {
     });
   }
 
+  viewVoteDetails(vote: any) {
+    this.selectedVote = vote;
+    this.showVoteDetails = true;
+  }
+
+  closeVoteDetails() {
+    this.selectedVote = null;
+    this.showVoteDetails = false;
+  }
+
   editVoter(voter: any) {
     if (!voter || !voter.id) return;
-    // Pass voter via navigation state to populate form immediately
     this.router.navigate([`/admin/voters/${voter.id}/edit`], { state: { voter } });
+  }
+
+  applyCandidateFilterSort() {
+    const term = (this.candidateSearch || '').toLowerCase().trim();
+    const list = this.candidates.slice();
+
+    const filtered = list.filter((c: any) => {
+      const full = ((c.name || '') + ' ' + (c.lastName || '')).toLowerCase();
+      return !term || full.includes(term);
+    });
+
+    filtered.sort((a: any, b: any) => {
+      const av = a.votes || 0;
+      const bv = b.votes || 0;
+      return this.candidateSort === 'asc' ? av - bv : bv - av;
+    });
+
+    this.displayedCandidates = filtered;
   }
 
   logout() {

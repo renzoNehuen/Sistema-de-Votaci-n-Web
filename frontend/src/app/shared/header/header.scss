@@ -21,6 +21,13 @@
     flex: 1;
     gap: 1rem;
 
+    .left-actions,
+    .right-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
     .user-info {
       display: flex;
       align-items: center;
@@ -51,6 +58,7 @@
     }
 
     .home-btn,
+    .dashboard-btn,
     .login-btn {
       ::ng-deep .p-button {
         background: rgba(44, 62, 80, 0.1) !important;

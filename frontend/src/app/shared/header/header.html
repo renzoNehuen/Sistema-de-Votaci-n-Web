@@ -1,32 +1,45 @@
 <div class="header">
   <div class="logo">Solcre</div>
   <div class="header-actions">
-    <p-button
-      icon="pi pi-home"
-      severity="secondary"
-      size="small"
-      routerLink="/"
-      class="home-btn">
-    </p-button>
-
-    <div *ngIf="(isAuthenticated$ | async)" class="user-info">
-      <span class="user-name">Bienvenido {{ (admin$ | async)?.name }}</span>
+    <div class="left-actions">
       <p-button
-        icon="pi pi-sign-out"
-        severity="danger"
-        size="small"
-        (click)="logout()"
-        class="logout-btn">
-      </p-button>
-    </div>
-    <div *ngIf="!(isAuthenticated$ | async)">
-      <p-button
-        icon="pi pi-sign-in"
+        icon="pi pi-home"
         severity="secondary"
         size="small"
-        routerLink="/login"
-        class="login-btn">
+        routerLink="/"
+        class="home-btn">
       </p-button>
+
+      <p-button
+        icon="pi pi-th-large"
+        label="Dashboard"
+        severity="secondary"
+        size="small"
+        routerLink="/admin/dashboard"
+        class="dashboard-btn"
+        *ngIf="(admin$ | async)">
+      </p-button>
+    </div>
+
+    <div class="right-actions">
+      <div *ngIf="(isAuthenticated$ | async)" class="user-info">
+        <p-button
+          icon="pi pi-sign-out"
+          severity="danger"
+          size="small"
+          (click)="logout()"
+          class="logout-btn">
+        </p-button>
+      </div>
+      <div *ngIf="!(isAuthenticated$ | async)">
+        <p-button
+          icon="pi pi-sign-in"
+          severity="secondary"
+          size="small"
+          routerLink="/login"
+          class="login-btn">
+        </p-button>
+      </div>
     </div>
   </div>
 </div>
