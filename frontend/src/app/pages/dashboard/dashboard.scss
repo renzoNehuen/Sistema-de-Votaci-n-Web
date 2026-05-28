@@ -259,6 +259,16 @@
   margin: 0.25rem 0;
 }
 
+.candidate-yes {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.candidate-no {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
 .delete-btn ::ng-deep .p-button {
   color: #c0392b;
   border: none;

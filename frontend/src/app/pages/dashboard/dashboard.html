@@ -60,7 +60,7 @@
             </p-table>
           </p-tabpanel>
 
-          <p-dialog header="Detalle del voto" [(visible)]="showVoteDetails" [modal]="true" [style]="{ width: '34rem' }" [closable]="false">
+          <p-dialog header="Detalle del voto" [(visible)]="showVoteDetails" [modal]="true" [style]="{ width: '34rem' }" [closable]="true">
             <div *ngIf="selectedVote" class="vote-detail-dialog">
               <div class="vote-detail-row">
                 <span>Voto ID</span>
@@ -80,17 +80,21 @@
                 <strong>{{ selectedVote.voter?.name }} {{ selectedVote.voter?.lastName }}</strong>
               </div>
               <div class="vote-detail-row">
-                <span>Email</span>
-                <strong>{{ selectedVote.voter?.email || 'No disponible' }}</strong>
+                <span>Documento</span>
+                <strong>{{ selectedVote.voter?.document || 'No disponible' }}</strong>
               </div>
               <div class="vote-detail-row">
-                <span>Identificación</span>
-                <strong>{{ selectedVote.voter?.identification || selectedVote.voter?.dni || 'No disponible' }}</strong>
+                <span>Fecha de Nacimiento</span>
+                <strong>{{ selectedVote.voter?.dob ? (selectedVote.voter.dob | date:'dd/MM/yyyy') : 'No disponible' }}</strong>
+              </div>
+              <div class="vote-detail-row">
+                <span>Es Candidato</span>
+                <strong>
+                  <span *ngIf="selectedVote.voter?.isCandidate" class="candidate-yes">Sí</span>
+                  <span *ngIf="!selectedVote.voter?.isCandidate" class="candidate-no">No</span>
+                </strong>
               </div>
             </div>
-            <p-footer>
-              <p-button label="Cerrar" icon="pi pi-times" styleClass="p-button-text" (click)="closeVoteDetails()"></p-button>
-            </p-footer>
           </p-dialog>
 
           <p-tabpanel value="1">
